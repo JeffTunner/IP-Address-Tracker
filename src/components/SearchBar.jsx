@@ -1,17 +1,13 @@
 import { useState } from 'react';
 import Arrow from '../assets/icon-arrow.svg'
+import { useGeolocation } from '../context/IPGeolocationContext.jsx';
 function SearchBar() {
 
-    const[data, setData] = useState(null);
+    const {fetchGeolocationData} = useGeolocation();
     const[input, setInput] = useState("");
 
-    async function generateInfo() {
-        const apiKey = import.meta.env.VITE_API_KEY;
-        let url = `https://geo.ipify.org/api/v2/country?apiKey=${apiKey}&ipAddress=${input}`;
-        const response = await fetch(url);
-        const result = await response.json();
-        setData(result);
-        console.log(result);
+     function generateInfo() {
+         fetchGeolocationData(input);
     }
 
     function handleInput(e) {
