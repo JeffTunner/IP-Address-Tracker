@@ -11,15 +11,23 @@ function MainContainer() {
     const[bgImg, setBgImg] = useState(window.innerWidth);
 
     useEffect(() => {
-        
-    })
+        const handleResize = () => {
+            setBgImg(window.innerWidth);
+        }
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    },[]);
 
     return (
         <main className="flex flex-col items-center h-screen">
             <div className="absolute w-full -z-10">
                 <div>
-                    <img src={BgMobile} alt="Bg-Mobile" 
-                    className="w-screen "/>
+                    { bgImg < 768 ? (
+                        <img src={BgMobile} alt="Bg-Mobile" 
+                    className="w-full"/>) : (<img src={BgDesktop} alt="Bg-Desktop" className="w-full"/>)}
                 </div>
             <div>
                 <Map />
