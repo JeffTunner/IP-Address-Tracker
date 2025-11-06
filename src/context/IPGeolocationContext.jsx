@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const IPGeolocationContext = createContext();
 
@@ -9,6 +9,8 @@ export function IPGeolocationProvider({children}) {
     const[location, setLocation] = useState("");
     const[timezone, setTimezone] = useState("");
     const[isp, setIsp] = useState("");
+    const[lat, setLat] = useState("");
+    const[lon, setLon] = useState("");
 
     const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -21,12 +23,18 @@ export function IPGeolocationProvider({children}) {
         setLocation(`${result.location.region}, ${result.location.country} ${result.location.postalCode}`);
         setTimezone(`UTC ${result.location.timezone}`);
         setIsp(result.isp);
+        setLat(result.location.lat);
+        setLon(result.location.lng);
         console.log(result);
     }
 
+    useEffect(() => {
+        fetchGeolocationData(ipAddress);
+    },[]);
+
     return(
         <IPGeolocationContext.Provider 
-        value={{data, fetchGeolocationData, ipAddress, location, timezone, isp}}
+        value={{data, fetchGeolocationData, ipAddress, location, timezone, isp, lat, lon}}
         >
             {children}
         </IPGeolocationContext.Provider>
