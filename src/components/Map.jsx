@@ -1,9 +1,21 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { useGeolocation } from "../context/IPGeolocationContext.jsx";
 import markerIcon from "../assets/icon-location.svg";
 import { marker } from "leaflet";
 import L from "leaflet";
+import { useEffect } from "react";
 
+function RecenterMap({lat, lon}) {
+    const map = useMap();
+
+    useEffect(() => {
+        if(lat && lon) {
+            
+            map.flyTo([lat, lon], 13);
+        }
+    }, [lat, lon, map]);
+    return null;
+}
 function Map() {
 
     const{lat, lon} = useGeolocation();
@@ -33,6 +45,7 @@ function Map() {
                 <Popup>Your Location</Popup>
             </Marker>
 
+            <RecenterMap lat={lat} lon={lon}/>
         </MapContainer>
     );
 }
