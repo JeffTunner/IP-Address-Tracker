@@ -27,7 +27,7 @@ export function IPGeolocationProvider({children}) {
     const apiKey = import.meta.env.VITE_API_KEY;
 
     async function fetchGeolocationData(IPAddress) {
-        let url = `https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=${IPAddress}`;
+        let url = `https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&domain=${IPAddress}`;
         const response = await fetch(url);
         const result = await response.json();
         setData(result);
@@ -48,6 +48,7 @@ export function IPGeolocationProvider({children}) {
     }
     fetchUserIP();
     }, []);
+
 
     return(
         <IPGeolocationContext.Provider 
