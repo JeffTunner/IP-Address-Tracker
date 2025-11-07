@@ -12,6 +12,7 @@ export function IPGeolocationProvider({children}) {
     const[lat, setLat] = useState("");
     const[lon, setLon] = useState("");
     const[size, setSize] = useState(window.innerWidth);
+    const[history, setHistory] = useState([]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -37,7 +38,6 @@ export function IPGeolocationProvider({children}) {
         setIsp(result.isp);
         setLat(result.location.lat);
         setLon(result.location.lng);
-        console.log(result);
     }
 
     useEffect(() => {
@@ -49,10 +49,24 @@ export function IPGeolocationProvider({children}) {
     fetchUserIP();
     }, []);
 
+    useEffect(() => {
+        const storedHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+        setHistory(storedHistory);
+    },[]);
+
+    useEffect(() => {
+        if(ipAddress) {
+            setHistory((prev) => {
+                const updated = [ipAddress, ...prev.filter((i) => i!== ipAddress)].slice(0,5);
+                localStorage.setItem("searchHistory", JSON.stringify(updated));
+                return updated;
+            })
+        }
+    },[ipAddress]);
 
     return(
         <IPGeolocationContext.Provider 
-        value={{data, fetchGeolocationData, ipAddress, location, timezone, isp, lat, lon, size}}
+        value={{data, fetchGeolocationData, ipAddress, location, timezone, isp, lat, lon, size, history}}
         >
             {children}
         </IPGeolocationContext.Provider>
