@@ -3,7 +3,7 @@ import Arrow from '../assets/icon-arrow.svg'
 import { useGeolocation } from '../context/IPGeolocationContext.jsx';
 function SearchBar() {
 
-    const {fetchGeolocationData} = useGeolocation();
+    const {fetchGeolocationData, size} = useGeolocation();
     const[input, setInput] = useState("");
 
      function generateInfo() {
@@ -15,12 +15,12 @@ function SearchBar() {
     }
 
     return(
-        <div className='flex'>
+        <div className='flex w-full justify-center'>
             <input type="text"
             value={input} 
             onChange={(e) => handleInput(e)}
             placeholder="Search for any IP address or domain" 
-            className='px-6 py-4 border-darkGray text-input font-rubik text-gray shadow-2xl bg-white rounded-l-2xl'
+            className='px-6 py-4 w-full md:w-[530px] border-darkGray text-input font-rubik text-darkGray shadow-2xl bg-white rounded-l-2xl'
             />
             <button 
             onClick={generateInfo}
