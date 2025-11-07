@@ -8,33 +8,22 @@ import { useEffect, useState } from "react";
 
 function MainContainer() {
 
-    const[bgImg, setBgImg] = useState(window.innerWidth);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setBgImg(window.innerWidth);
-        }
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    },[]);
+    const{size} = useGeolocation();
 
     return (
         <main className="flex flex-col items-center h-screen">
             <div className="absolute w-full -z-10">
                 <div>
-                    { bgImg < 768 ? (
+                    { size < 768 ? (
                         <img src={BgMobile} alt="Bg-Mobile" 
-                    className="w-full"/>) : (<img src={BgDesktop} alt="Bg-Desktop" className="w-full"/>)}
+                    className="w-full h-80"/>) : (<img src={BgDesktop} alt="Bg-Desktop" className="w-full h-80"/>)}
                 </div>
             <div>
                 <Map />
             </div>
             </div>
-            <section className="flex flex-col gap-5 absolute mt-10 mx-7 items-center z-50">
-                <h1 className="font-rubik text-white text-2xl font-medium">IP Address Tracker</h1>
+            <section className="flex flex-col gap-5 md:gap-8 absolute mt-10 mx-7 items-center z-50">
+                <h1 className="font-rubik text-white text-2xl md:text-3xl font-medium text-center">IP Address Tracker</h1>
                 <SearchBar />
                 <InfoCard />
             </section>

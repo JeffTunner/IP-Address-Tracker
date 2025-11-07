@@ -11,6 +11,18 @@ export function IPGeolocationProvider({children}) {
     const[isp, setIsp] = useState("");
     const[lat, setLat] = useState("");
     const[lon, setLon] = useState("");
+    const[size, setSize] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setSize(window.innerWidth);
+        }
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    },[]);
 
     const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -34,7 +46,7 @@ export function IPGeolocationProvider({children}) {
 
     return(
         <IPGeolocationContext.Provider 
-        value={{data, fetchGeolocationData, ipAddress, location, timezone, isp, lat, lon}}
+        value={{data, fetchGeolocationData, ipAddress, location, timezone, isp, lat, lon, size}}
         >
             {children}
         </IPGeolocationContext.Provider>
