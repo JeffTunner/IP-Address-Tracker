@@ -5,6 +5,7 @@ import InfoCard from "./InfoCard";
 import { useGeolocation } from "../context/IPGeolocationContext.jsx";
 import Map from "./Map.jsx";
 import { useEffect, useState } from "react";
+import SearchHistory from "./SearchHistory.jsx";
 
 function MainContainer() {
 
@@ -26,6 +27,7 @@ function MainContainer() {
                 <h1 className="font-rubik text-white text-2xl md:text-3xl font-medium text-center">IP Address Tracker</h1>
                 <SearchBar />
                 <InfoCard />
+                <SearchHistory />
             </section>
             
         </main>
