@@ -41,8 +41,13 @@ export function IPGeolocationProvider({children}) {
     }
 
     useEffect(() => {
-        fetchGeolocationData(ipAddress);
-    },[]);
+    async function fetchUserIP() {
+        const res = await fetch("https://api.ipify.org?format=json");
+        const data = await res.json();
+        fetchGeolocationData(data.ip);
+    }
+    fetchUserIP();
+    }, []);
 
     return(
         <IPGeolocationContext.Provider 
