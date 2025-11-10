@@ -42,7 +42,7 @@ export function IPGeolocationProvider({children}) {
 
     useEffect(() => {
     async function fetchUserIP() {
-        const res = await fetch("https://api.ipify.org?format=json");
+        const res = await fetch("http://localhost:8080/api/ip/myself");
         const data = await res.json();
         fetchGeolocationData(data.ip);
     }
