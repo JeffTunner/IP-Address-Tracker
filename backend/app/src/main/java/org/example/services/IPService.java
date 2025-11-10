@@ -16,7 +16,7 @@ public class IPService {
 
     public Map<String, Object> getIPInfo(String ip) {
         try {
-            String url = "https://geo.ipify.org/api/v2/country,city?apiKey=" + apiKey + "&ipAddress=" + ip;
+            String url = "https://geo.ipify.org/api/v2/country,city?apiKey=" + apiKey + "&domain=" + ip;
             ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
             if(response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
                 return response.getBody();
