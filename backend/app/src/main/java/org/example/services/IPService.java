@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -19,6 +21,10 @@ public class IPService {
 
     @Autowired
     private SearchHistoryRepository historyRepository;
+
+    public List<SearchHistory> getRecentSearches() {
+        return historyRepository.findTop5ByOrderBySearchedAtDesc();
+    }
 
     public Map<String, Object> getIPInfo(String ip) {
         try {
