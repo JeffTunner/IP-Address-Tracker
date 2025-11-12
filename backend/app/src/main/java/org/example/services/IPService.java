@@ -31,7 +31,14 @@ public class IPService {
             String url = "https://geo.ipify.org/api/v2/country,city?apiKey=" + apiKey + "&domain=" + ip;
             ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
 
+            historyRepository.findByIpAddress(ip).ifPresent(historyRepository::delete);
             historyRepository.save(new SearchHistory(ip));
+
+            List<SearchHistory> all = historyRepository.findAll().stream().sorted((a,b) -> b.getSearchedAt().compareTo(a.getSearchedAt())).toList();
+
+            if(all.size() > 5) {
+                historyRepository.deleteAll(all.subList(5, all.size()));
+            }
 
             if(response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
                 return response.getBody();
