@@ -3,6 +3,7 @@ import { useGeolocation } from "../context/IPGeolocationContext.jsx";
 function SearchHistory() {
 
     const{history, fetchGeolocationData} = useGeolocation();
+    console.log("History:", history);
 
     return(
         <section className="bg-white shadow-xl rounded-xl p-4 mt-4 w-full max-w-lg">
@@ -13,7 +14,7 @@ function SearchHistory() {
                     key={i}
                     onClick={() => fetchGeolocationData(item)}
                     className="cursor-pointer bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300 transition">
-                        {item}
+                        {item.ipAddress}
                     </li>
                 ))}
             </ul>
