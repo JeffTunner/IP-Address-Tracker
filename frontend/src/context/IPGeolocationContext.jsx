@@ -29,7 +29,7 @@ export function IPGeolocationProvider({children}) {
 
     async function fetchGeolocationData(IPAddress) {
         try {
-        const response = await fetch(`http://localhost:8080/api/ip?ip=${IPAddress}`);
+        const response = await fetch(`https://tracker-backend-o7sg.onrender.com/api/ip?ip=${IPAddress}`);
         const result = await response.json();
 
         if (result.error) {
@@ -58,7 +58,7 @@ export function IPGeolocationProvider({children}) {
 
     useEffect(() => {
     async function fetchUserIP() {
-        const res = await fetch("http://localhost:8080/api/ip/myself");
+        const res = await fetch("https://tracker-backend-o7sg.onrender.com/api/ip/myself");
         const data = await res.json();
         fetchGeolocationData(data.ip);
     }
@@ -70,7 +70,7 @@ export function IPGeolocationProvider({children}) {
     },[]);
 
     async function fetchRecentSearches() {
-        const res = await fetch("http://localhost:8080/api/ip/history");
+        const res = await fetch("https://tracker-backend-o7sg.onrender.com/api/ip/history");
         const data = await res.json();
         setHistory(data);
     }
